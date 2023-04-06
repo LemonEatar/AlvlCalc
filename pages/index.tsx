@@ -14,7 +14,6 @@ function HomePage() {
     <>
       <meta charSet="UTF-8" />
       <title>abirechner</title>
-      <link rel="stylesheet" href="styles.css" />
       <header>
         <div className="logo">
           <img src="#" alt="ALvL" />
