@@ -1,5 +1,14 @@
 import Link from "next/link";
 
+function Background() {
+  return (
+    <div className="background">
+      <h1>Try the Alvl-Calc</h1>
+      <button>Go to store</button>
+    </div>
+  );
+}
+
 function HomePage() {
   return (
     <>
@@ -8,53 +17,53 @@ function HomePage() {
       <link rel="stylesheet" href="styles.css" />
       <header>
         <div className="logo">
-          <img src="logo.png" alt="Logo" />
+          <img src="#" alt="ALvL" />
         </div>
         <div className="login">
-          <a href="#">Login</a>
+          <a href="/logan">Login/Anmeldung</a>
         </div>
       </header>
       <nav>
         <ul>
           <li className="dropdown">
             <a href="#">Calc</a>
-            <ul className="dropdown-menu">
+            <ul className="dropdown-menu centered">
               <li>
-                <a href="#">Rechner 1</a>
+                <a href="#">Bayern Calc</a>
               </li>
               <li>
-                <a href="#">Rechner 2</a>
+                <a href="#">NRW Calc</a>
               </li>
               <li>
-                <a href="#">Rechner 3</a>
+                <a href="#">Baden-Württemberg Calc</a>
               </li>
             </ul>
           </li>
           <li className="dropdown">
             <a href="#">Tools</a>
-            <ul className="dropdown-menu">
+            <ul className="dropdown-menu centered">
               <li>
-                <a href="/calcbay">Tool 1</a>
+                <a href="/calcbay">Noten-Predictor</a>
               </li>
               <li>
-                <a href="#">Tool 2</a>
+                <a href="/chart">Noten-Chart</a>
               </li>
               <li>
-                <a href="#">Tool 3</a>
+                <a href="/stundenplan">Stundenplan</a>
               </li>
             </ul>
           </li>
           <li className="dropdown">
             <a href="#">About</a>
-            <ul className="dropdown-menu">
+            <ul className="dropdown-menu centered">
               <li>
-                <a href="#">Über uns</a>
+                <a href="/about">About</a>
               </li>
               <li>
-                <a href="#">Kontakt</a>
+                <a href="/kontakt">Kontakt</a>
               </li>
               <li>
-                <a href="#">Impressum</a>
+                <a href="/impressum">Impressum</a>
               </li>
             </ul>
           </li>
@@ -64,4 +73,5 @@ function HomePage() {
     </>
   );
 }
+
 export default HomePage;
