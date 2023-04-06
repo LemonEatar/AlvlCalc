@@ -138,7 +138,9 @@ const Table: React.FC = () => {
           </tr>
         </tbody>
       </table>
-      <button onClick={handleAddCategory}>Add Category</button>
+      <button onClick={handleAddCategory} className="btn">
+        Add Category
+      </button>
       <button className="btn">Button</button>
     </div>
   );
