@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Head from "next/head";
 
 interface TableHeader {
   key: string;
@@ -97,7 +98,8 @@ const Table: React.FC = () => {
             <tr key={rowIndex}>
               {tableHeaders.map(({ key }) => (
                 <td key={key}>
-                  {editedRowIndex === rowIndex && editedRowValues.hasOwnProperty(key) ? (
+                  {editedRowIndex === rowIndex &&
+                  editedRowValues.hasOwnProperty(key) ? (
                     <input
                       type={key === "id" ? "number" : "text"}
                       value={editedRowValues[key] || row[key]}
@@ -114,31 +116,31 @@ const Table: React.FC = () => {
                     <button onClick={handleSaveRow}>Save</button>
                     <button onClick={handleCancelEdit}>Cancel</button>
                   </>
-               
-            ) : (
-              <button onClick={() => handleEditRow(rowIndex)}>Edit</button>
-            )}
-          </td>
-        </tr>
-      ))}
-      <tr>
-        {tableHeaders.map(({ key }) => (
-          <td key={key}>
-            <input
-              type={key === "id" ? "number" : "text"}
-              value={editedRowValues[key] || ""}
-              onChange={(e) => handleInputChange(e, key)}
-            />
-          </td>
-        ))}
-        <td>
-          <button onClick={handleAddRow}>Add</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <button onClick={handleAddCategory}>Add Category</button>
-</div>
-);
+                ) : (
+                  <button onClick={() => handleEditRow(rowIndex)}>Edit</button>
+                )}
+              </td>
+            </tr>
+          ))}
+          <tr>
+            {tableHeaders.map(({ key }) => (
+              <td key={key}>
+                <input
+                  type={key === "id" ? "number" : "text"}
+                  value={editedRowValues[key] || ""}
+                  onChange={(e) => handleInputChange(e, key)}
+                />
+              </td>
+            ))}
+            <td>
+              <button onClick={handleAddRow}>Add</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button onClick={handleAddCategory}>Add Category</button>
+      <button className="btn">Button</button>
+    </div>
+  );
 };
 export default Table;
