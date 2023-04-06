@@ -1,117 +1,144 @@
-import { useState } from "react";
-
-interface TableData {
-  id: number;
-  name: string;
-  category: string;
-  quantity: number;
-}
+import React, { useState } from "react";
 
 interface TableHeader {
+  key: string;
   title: string;
-  key: keyof TableData;
 }
 
-const initialTableData: TableData[] = [
-  { id: 1, name: "Item 1", category: "Category 1", quantity: 5 },
-  { id: 2, name: "Item 2", category: "Category 2", quantity: 3 },
-  { id: 3, name: "Item 3", category: "Category 1", quantity: 7 },
-];
+interface TableData {
+  [key: string]: number | string;
+}
 
 const initialTableHeaders: TableHeader[] = [
-  { title: "ID", key: "id" },
-  { title: "Name", key: "name" },
-  { title: "Category", key: "category" },
-  { title: "Quantity", key: "quantity" },
+  { key: "id", title: "ID" },
+  { key: "name", title: "Name" },
 ];
 
-const Table = () => {
-  const [tableData, setTableData] = useState<TableData[]>(initialTableData);
-  const [tableHeaders, setTableHeaders] = useState<TableHeader[]>(
-    initialTableHeaders
+const Table: React.FC = () => {
+  const [tableHeaders, setTableHeaders] = useState(initialTableHeaders);
+  const [tableData, setTableData] = useState<TableData[]>([]);
+  const [editedRowIndex, setEditedRowIndex] = useState<number | null>(null);
+  const [editedRowValues, setEditedRowValues] = useState<Partial<TableData>>(
+    {}
   );
-  const [inputValues, setInputValues] = useState<Partial<TableData>>({});
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    key: keyof TableData
+    key: string
   ) => {
-    const inputValue = event.target.value;
-    setInputValues((prevInputValues) => ({
-      ...prevInputValues,
-      [key]: key === "quantity" ? parseInt(inputValue, 10) : inputValue,
-    }));
+    const { value } = event.target;
+    if (key === "id" && isNaN(parseInt(value))) {
+      return;
+    }
+    setEditedRowValues((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const handleEditRow = (rowIndex: number) => {
+    setEditedRowIndex(rowIndex);
+    setEditedRowValues(tableData[rowIndex]);
+  };
+
+  const handleSaveRow = () => {
+    if (editedRowIndex !== null) {
+      const newRow = {
+        ...tableData[editedRowIndex],
+        ...editedRowValues,
+      };
+      const newTableData = [...tableData];
+      newTableData[editedRowIndex] = newRow;
+      setTableData(newTableData);
+      setEditedRowIndex(null);
+      setEditedRowValues({});
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditedRowIndex(null);
+    setEditedRowValues({});
   };
 
   const handleAddRow = () => {
-    const newTableData = [...tableData];
-    const newRowIndex = newTableData.length;
-    const newTableDataItem: TableData = {
-      id: Date.now(),
+    const newRow = {
+      id: "",
       name: "",
-      category: "",
-      quantity: 0,
-      ...inputValues,
+      ...editedRowValues,
     };
-    newTableData[newRowIndex] = newTableDataItem;
-    setTableData(newTableData);
-    setInputValues({});
+    setTableData((prev) => [...prev, newRow]);
+    setEditedRowValues({});
   };
 
   const handleAddCategory = () => {
-    const newCategory = prompt("Enter new category name");
-    if (newCategory) {
-      const newTableHeaders = [...tableHeaders];
-      newTableHeaders.splice(
-        2,
-        0,
-        { title: newCategory, key: newCategory.toLowerCase() } as TableHeader
+    const newCategoryTitle = prompt("Enter new category title:");
+    if (newCategoryTitle) {
+      const newCategoryKey = newCategoryTitle.toLowerCase();
+      setTableHeaders((prev) => [
+        ...prev,
+        { key: newCategoryKey, title: newCategoryTitle },
+      ]);
+      setTableData((prev) =>
+        prev.map((row) => ({ ...row, [newCategoryKey]: "" }))
       );
-      setTableHeaders(newTableHeaders);
-
-      const newTableData = tableData.map((item) => ({
-        ...item,
-        [newCategory.toLowerCase()]: 0,
-      }));
-      setTableData(newTableData);
     }
   };
 
   return (
     <div>
-      <div>
-        {tableHeaders.map((header) => (
-          <input
-            key={header.key}
-            value={inputValues[header.key] || ""}
-            onChange={(event) => handleInputChange(event, header.key)}
-            type={header.key === "quantity" ? "number" : "text"}
-            placeholder={header.title}
-          />
-        ))}
-        <button onClick={handleAddRow}>Add</button>
-      </div>
       <table>
         <thead>
           <tr>
-            {tableHeaders.map((header) => (
-              <th key={header.key}>{header.title}</th>
+            {tableHeaders.map(({ key, title }) => (
+              <th key={key}>{title}</th>
             ))}
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          {tableData.map((row) => (
-            <tr key={row.id}>
-              {tableHeaders.map((header) => (
-                <td key={header.key}>{row[header.key]}</td>
-                              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <button onClick={handleAddCategory}>Add Category</button>
-    </div>
-  );
+          {tableData.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {tableHeaders.map(({ key }) => (
+                <td key={key}>
+                  {editedRowIndex === rowIndex && editedRowValues.hasOwnProperty(key) ? (
+                    <input
+                      type={key === "id" ? "number" : "text"}
+                      value={editedRowValues[key] || row[key]}
+                      onChange={(e) => handleInputChange(e, key)}
+                    />
+                  ) : (
+                    row[key]
+                  )}
+                </td>
+              ))}
+              <td>
+                {editedRowIndex === rowIndex ? (
+                  <>
+                    <button onClick={handleSaveRow}>Save</button>
+                    <button onClick={handleCancelEdit}>Cancel</button>
+                  </>
+               
+            ) : (
+              <button onClick={() => handleEditRow(rowIndex)}>Edit</button>
+            )}
+          </td>
+        </tr>
+      ))}
+      <tr>
+        {tableHeaders.map(({ key }) => (
+          <td key={key}>
+            <input
+              type={key === "id" ? "number" : "text"}
+              value={editedRowValues[key] || ""}
+              onChange={(e) => handleInputChange(e, key)}
+            />
+          </td>
+        ))}
+        <td>
+          <button onClick={handleAddRow}>Add</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button onClick={handleAddCategory}>Add Category</button>
+</div>
+);
 };
-
 export default Table;
