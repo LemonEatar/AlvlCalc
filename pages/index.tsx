@@ -18,14 +18,13 @@ function HomePage() {
         <div className="logo">
           <img src="#" alt="ALvL" />
         </div>
-        <div className="login">
-          <a href="/logan">Login/Anmeldung</a>
-        </div>
+        
       </header>
       <nav>
-        <div>
-         <lable tabIndex={0} className="btn m-1">Select</lable>
-        <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+        <div className="navbar bg-base-100 dropdown-content menu menu-horizontal px-1">
+<div className="login">
+          <a href="/logan">Login/Anmeldung</a>
+        </div>
           <li className="dropdown">
               <a href="#">Calc</a>
             <ul className="dropdown-menu centered">
@@ -68,7 +67,6 @@ function HomePage() {
               </li>
             </ul>
           </li>
-        </ul>
         </div>
       </nav>
       <main>{/* webseite*/}</main>
