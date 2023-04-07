@@ -23,9 +23,10 @@ function HomePage() {
         </div>
       </header>
       <nav>
-        <ul>
+        <div>
+         <lable tabIndex={0} className="btn m-1">Calc</lable>
+        <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
           <li className="dropdown">
-            <a href="#">Calc</a>
             <ul className="dropdown-menu centered">
               <li>
                 <a href="#">Bayern Calc</a>
@@ -67,6 +68,7 @@ function HomePage() {
             </ul>
           </li>
         </ul>
+        </div>
       </nav>
       <main>{/* webseite*/}</main>
     </>
