@@ -12,7 +12,7 @@ interface TableData {
 
 const initialTableHeaders: TableHeader[] = [
   { key: "id", title: "ID" },
-  { key: "name", title: "Name" },
+  { key: "name", title: "maths: " },
 ];
 
 const Table: React.FC = () => {
@@ -141,7 +141,6 @@ const Table: React.FC = () => {
       <button onClick={handleAddCategory} className="btn">
         Add Category
       </button>
-      <button className="btn">Button</button>
     </div>
   );
 };
