@@ -9,9 +9,12 @@ interface TableData {
   [key: string]: number | string;
 }
 
+const subjects = ["german", "chemics", "english", "music", "test"]
+
 const initialTableHeaders: TableHeader[] = [
   { key: "id", title: "ID" },
-  { key: "name", title: "maths: " },
+  { key: "name", title: "maths"},
+  {key: "grades",  title: "Grades", grades: []}
 ];
 
 const Table: React.FC = () => {
@@ -60,25 +63,27 @@ const Table: React.FC = () => {
     const newRow = {
       id: "",
       name: "",
+      grades: [name.value],
       ...editedRowValues,
     };
     setTableData((prev) => [...prev, newRow]);
     setEditedRowValues({});
+    console.log(newRow.grades[0])
   };
 
-  const handleAddCategory = () => {
-    const newCategoryTitle = prompt("Enter new category title:");
+  const handleAddCategory = (index) => {
+    const newCategoryTitle = subjects[index];
     if (newCategoryTitle) {
       const newCategoryKey = newCategoryTitle.toLowerCase();
       setTableHeaders((prev) => [
         ...prev,
-        { key: newCategoryKey, title: newCategoryTitle },
+        { key: newCategoryKey, title: newCategoryTitle, grades: [] },
       ]);
       setTableData((prev) =>
         prev.map((row) => ({ ...row, [newCategoryKey]: "" }))
       );
     }
-  };
+ };
 
   return (
     <div>
@@ -136,10 +141,15 @@ const Table: React.FC = () => {
           </tr>
         </tbody>
       </table>
-      <button onClick={handleAddCategory} className="btn">
-        Add Category
-      </button>
-    </div>
+      <div className="dropdown">
+  <label tabIndex={0} className="btn m-1">Click</label>
+  <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+    <li><button onClick={() => handleAddCategory(0)}>german</button></li>
+    <li><button onClick={() => handleAddCategory(1)}>chemics</button></li>
+    <li><button onClick={() => handleAddCategory(2)}>english</button></li>
+  </ul>
+</div>
+</div>
   );
 };
 export default Table;

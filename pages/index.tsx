@@ -21,10 +21,8 @@ function HomePage() {
         
       </header>
       <nav>
-        <div className="navbar bg-base-100 dropdown-content menu menu-horizontal px-1">
-<div className="login">
-          <a href="/logan">Login/Anmeldung</a>
-        </div>
+        <div className="navbar bg-base-100 dropdown-content menu menu-horizontal px-1 container">
+     
           <li className="dropdown">
               <a href="#">Calc</a>
             <ul className="dropdown-menu centered">
@@ -67,6 +65,9 @@ function HomePage() {
               </li>
             </ul>
           </li>
+           <div className="login">
+          <a href="/logan">Login/Anmeldung</a>
+        </div>
         </div>
       </nav>
       <main>{/* webseite*/}</main>
