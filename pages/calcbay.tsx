@@ -9,12 +9,12 @@ interface TableData {
   [key: string]: number | string;
 }
 
-const subjects = ["german", "chemics", "english", "music", "test"]
+const subjects = ["german", "chemics", "english", "music", "test"];
 
 const initialTableHeaders: TableHeader[] = [
   { key: "id", title: "ID" },
-  { key: "name", title: "maths"},
-  {key: "grades",  title: "Grades", grades: []}
+  { key: "name", title: "maths" },
+  { key: "grades", title: "Grades", grades: [] },
 ];
 
 const Table: React.FC = () => {
@@ -68,7 +68,7 @@ const Table: React.FC = () => {
     };
     setTableData((prev) => [...prev, newRow]);
     setEditedRowValues({});
-    console.log(newRow.grades[0])
+    console.log(newRow.grades[0]);
   };
 
   const handleAddCategory = (index) => {
@@ -83,7 +83,7 @@ const Table: React.FC = () => {
         prev.map((row) => ({ ...row, [newCategoryKey]: "" }))
       );
     }
- };
+  };
 
   return (
     <div>
@@ -142,14 +142,25 @@ const Table: React.FC = () => {
         </tbody>
       </table>
       <div className="dropdown">
-  <label tabIndex={0} className="btn m-1">Click</label>
-  <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-    <li><button onClick={() => handleAddCategory(0)}>german</button></li>
-    <li><button onClick={() => handleAddCategory(1)}>chemics</button></li>
-    <li><button onClick={() => handleAddCategory(2)}>english</button></li>
-  </ul>
-</div>
-</div>
+        <label tabIndex={0} className="btn m-1">
+          Subjects
+        </label>
+        <ul
+          tabIndex={0}
+          className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+        >
+          {subjects.map((subject, index) => {
+            return (
+              <li>
+                <button onClick={() => handleAddCategory(index)}>
+                  {subject}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
   );
 };
 export default Table;
