@@ -25,4 +25,4 @@ npm i && npm run dev
 
 # Use
 
-The use is pretty self-explanatory. You press the ADD CATEGORY button to add your subjects and than add your Points in the fitting cell
+The use is pretty self-explanatory. You press the Subjects button to add your subjects and than add your Points in the fitting cell
