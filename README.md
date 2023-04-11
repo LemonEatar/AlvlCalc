@@ -23,6 +23,10 @@ yarn i && yarn dev
 npm i && npm run dev
 ```
 
+#Database
+
+I have a Database server running. To get access to the .env file, message me private and i will send it to you
+
 # Use
 
 The use is pretty self-explanatory. You press the Subjects button to add your subjects and than add your Points in the fitting cell

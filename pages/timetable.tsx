@@ -4,10 +4,10 @@ const Table = () => {
   const [rows, setRows] = useState([]);
 
   const handleAddRow = () => {
-    setRows: String([...rows, { col1: '', col2: '', col3: '', col4: '', col5: '',}]);
+    setRows([...rows, { col1: '', col2: '', col3: '', col4: '', col5: '',}]);
   };
 
-  const handleEditRow = (index: any, field: any, value: any) => {
+  const handleEditRow = (index, field, value) => {
     const updatedRows = [...rows];
     updatedRows[index][field] = value;
     setRows(updatedRows);

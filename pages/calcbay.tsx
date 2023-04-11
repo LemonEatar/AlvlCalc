@@ -1,3 +1,4 @@
+import prisma from '../lib/prisma'
 import React, { useState } from "react";
 
 interface TableHeader {
@@ -14,7 +15,6 @@ const subjects = ["german", "chemics", "english", "music", "test"];
 const initialTableHeaders: TableHeader[] = [
   { key: "id", title: "ID" },
   { key: "name", title: "maths" },
-  { key: "grades", title: "Grades", grades: [] },
 ];
 
 const Table: React.FC = () => {
