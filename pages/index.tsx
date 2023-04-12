@@ -114,7 +114,7 @@ function HomePage() {
       <Background />
       <style jsx global>{`
         body {
-          background-image: url('your-image-url.jpg');
+          background-image: url('bground.jpeg');
           background-repeat: no-repeat;
           background-size: cover;
           background-position: center;
