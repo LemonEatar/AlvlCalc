@@ -1,13 +1,17 @@
 import { useState } from 'react';
+import { prisma } from './db'
+
+
 
 const Table = () => {
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState<any[]>([]);
 
-  const handleAddRow = () => {
-    setRows([...rows, { col1: '', col2: '', col3: '', col4: '', col5: '',}]);
-  };
+  const handleAddRow = async() => {
+    setRows([...rows, { monday: '', tuesday: '', wednesday: '', thursday:'', friday:'',}]);
 
-  const handleEditRow = (index, field, value) => {
+    };
+
+  const handleEditRow = (index: any, field: any, value: any) => {
     const updatedRows = [...rows];
     updatedRows[index][field] = value;
     setRows(updatedRows);
@@ -31,36 +35,36 @@ const Table = () => {
               <td>
                 <input
                   type="text"
-                  value={row.col1}
-                  onChange={(e) => handleEditRow(index, 'col1', e.target.value)}
+                  value={row.monday}
+                  onChange={(e) => handleEditRow(index, 'monday', e.target.value)}
                 />
               </td>
               <td>
                 <input
                   type="text"
-                  value={row.col2}
-                  onChange={(e) => handleEditRow(index, 'col2', e.target.value)}
+                  value={row.tuesday}
+                  onChange={(e) => handleEditRow(index, 'tuesday', e.target.value)}
                 />
               </td>
               <td>
                 <input
                   type="text"
-                  value={row.col3}
-                  onChange={(e) => handleEditRow(index, 'col3', e.target.value)}
+                  value={row.wednesday}
+                  onChange={(e) => handleEditRow(index, 'wednesday', e.target.value)}
                 />
               </td>
               <td>
                 <input
                   type="text"
-                  value={row.col4}
-                  onChange={(e) => handleEditRow(index, 'col4', e.target.value)}
+                  value={row.thursday}
+                  onChange={(e) => handleEditRow(index, 'thursday', e.target.value)}
                 />
               </td>
               <td>
                 <input
                   type="text"
-                  value={row.col5}
-                  onChange={(e) => handleEditRow(index, 'col5', e.target.value)}
+                  value={row.friday}
+                  onChange={(e) => handleEditRow(index, 'friday', e.target.value)}
                 />
               </td>
 
@@ -72,6 +76,16 @@ const Table = () => {
     </div>
   );
 };
-
+export const getServerSideProps = async ({}) => {
+ const TimeTable  = await prisma.timeTable.findUnique({
+      where: {
+        id: 1,
+      }
+    })
+  return {
+   
+    props: {TimeTable} 
+  }
+}
 export default Table;
 

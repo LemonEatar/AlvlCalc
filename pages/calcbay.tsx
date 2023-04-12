@@ -10,7 +10,7 @@ interface TableData {
   [key: string]: number | string;
 }
 
-const subjects = ["german", "chemics", "english", "music", "test"];
+const subjects = ["german", "chemics", "english", "music", "test", "bio"];
 
 const initialTableHeaders: TableHeader[] = [
   { key: "id", title: "ID" },
@@ -87,7 +87,8 @@ const Table: React.FC = () => {
 
   return (
     <div>
-      <table>
+      <div className="overflow-x-auto">
+      <table className="table table-compact w-full">
         <thead>
           <tr>
             {tableHeaders.map(({ key, title }) => (
@@ -141,7 +142,8 @@ const Table: React.FC = () => {
           </tr>
         </tbody>
       </table>
-      <div className="dropdown">
+      </div>
+      <div className="dropdown tooltip tooltip-right" data-tip="Choose your Subject here 😎">
         <label tabIndex={0} className="btn m-1">
           Subjects
         </label>
