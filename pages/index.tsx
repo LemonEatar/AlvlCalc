@@ -14,63 +14,113 @@ function HomePage() {
     <>
       <meta charSet="UTF-8" />
       <title>abirechner</title>
-      <header>
-        <div className="logo">
-          <img src="#" alt="ALvL" />
+      <div className="navbar bg-base-300">
+         <div className="flex-1">
+          <a className="btn btn-ghost normal-case text-xl">ALvL</a>
         </div>
-        
-      </header>
-      <nav>
-        <div className="navbar bg-base-100 dropdown-content menu menu-horizontal px-1 container">
-     
-          <li className="dropdown">
-              <a href="#">Calc</a>
-            <ul className="dropdown-menu centered">
+        <div className="flex-none">
+          <ul className="menu menu-horizontal px-1">
+            <li tabIndex={0}>
+              <a>
+                Calc
+                <svg
+                  className="fill-current"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                </svg>
+              </a>
+              <ul className="p-2 bg-base-100 absolute top-14 left-0">
+                <li>
+                <button onClick={() => window.location.href = '/calcbay'}>
+              <a>Bayern Calc</a>
+            </button>
+
+            <button onClick={() => window.location.href = '/calcnrw'}>
+              <a>NRW Calc</a>
+            </button>
+
+            <button onClick={() => window.location.href = '/calchess'}>
+              <a>Hessen Calc</a>
+            </button>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a>
+                Tools
+                <svg
+                  className="fill-current"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                </svg>
+              </a>
+              <ul className="p-2 bg-base-100 absolute top-14 left-0">
               <li>
-                <a href="#">Bayern Calc</a>
-              </li>
+                <button onClick={() => window.location.href = '/ttabl'}>
+              <a>Timetable</a>
+            </button>
+
+            <button onClick={() => window.location.href = '/nchar'}>
+              <a>Notenchart</a>
+            </button>
+
+            <button onClick={() => window.location.href = '/npred'}>
+              <a>Notenpredictor</a>
+            </button>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a>
+                More
+                <svg
+                  className="fill-current"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                </svg>
+              </a>
+              <ul className="p-2 bg-base-100 absolute top-14 left-0">
               <li>
-                <a href="#">NRW Calc</a>
-              </li>
-              <li>
-                <a href="#">Baden-Württemberg Calc</a>
-              </li>
-            </ul>
-          </li>
-          <li className="dropdown">
-            <a href="#">Tools</a>
-            <ul className="dropdown-menu centered">
-              <li>
-                <a href="/calcbay">Noten-Predictor</a>
-              </li>
-              <li>
-                <a href="/chart">Noten-Chart</a>
-              </li>
-              <li>
-                <a href="/stundenplan">Stundenplan</a>
-              </li>
-            </ul>
-          </li>
-          <li className="dropdown">
-            <a href="#">About</a>
-            <ul className="dropdown-menu centered">
-              <li>
-                <a href="/about">About</a>
-              </li>
-              <li>
-                <a href="/kontakt">Kontakt</a>
-              </li>
-              <li>
-                <a href="/impressum">Impressum</a>
-              </li>
-            </ul>
-          </li>
-           <div className="login">
-          <a href="/logan">Login/Anmeldung</a>
+                <button onClick={() => window.location.href = '/about'}>
+              <a>About</a>
+            </button>
+
+            <button onClick={() => window.location.href = '/contact'}>
+              <a>Contact</a>
+            </button>
+
+            <button onClick={() => window.location.href = '/cffe'}>
+              <a>Buy us a Coffee</a>
+            </button>
+                </li>
+              </ul>
+            </li>
+            <li><a>Login/Registrieren</a></li>
+          </ul>
         </div>
-        </div>
-      </nav>
-      <main>{/* webseite*/}</main>
+      </div>
+      <Background />
+      <style jsx global>{`
+        body {
+          background-image: url('your-image-url.jpg');
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: center;
+          font-family: sans-serif;
+        }
+      `}</style>
     </>
   );
 }
