@@ -1,20 +1,43 @@
-import { useState } from 'react';
-import { prisma } from './db'
+import { useState } from "react";
+import { prisma } from "./db";
+import { chdir } from "process";
+import { TimeTable } from "@prisma/client";
 
+export async function getServerSideProps() {
+  const timeTable = await prisma.timeTable.findMany();
+  console.debug({ timeTable });
+  return {
+    props: { timeTable },
+  };
+}
 
+const Table = ({ timeTable }: { timeTable: TimeTable[] }) => {
+  const [rows, setRows] = useState<TimeTable[]>([]);
+  const [hour, setHour] = useState("");
+  const [monday, setMonday] = useState("");
+  const [tuesday, setTuesday] = useState("");
+  const [wednesday, setWednesday] = useState("");
+  const [thursday, setThursday] = useState("");
+  const [friday, setFriday] = useState("");
 
-const Table = () => {
-  const [rows, setRows] = useState<any[]>([]);
-
-  const handleAddRow = async() => {
-    setRows([...rows, { monday: '', tuesday: '', wednesday: '', thursday:'', friday:'',}]);
-
+  const handleAddRow = async () => {
+    const newRow = {
+      id: rows.length + 1,
+      Hour: hour,
+      Monday: monday,
+      Tuesday: tuesday,
+      Wednesday: wednesday,
+      Thursday: thursday,
+      Friday: friday,
     };
-
-  const handleEditRow = (index: any, field: any, value: any) => {
-    const updatedRows = [...rows];
-    updatedRows[index][field] = value;
-    setRows(updatedRows);
+    setRows([...rows, newRow]);
+    await prisma.timeTable.create({ data: newRow });
+    setHour("");
+    setMonday("");
+    setTuesday("");
+    setWednesday("");
+    setThursday("");
+    setFriday("");
   };
 
   return (
@@ -22,6 +45,7 @@ const Table = () => {
       <table>
         <thead>
           <tr>
+            <th>Hour</th>
             <th>Monday</th>
             <th>Tuesday</th>
             <th>Wednesday</th>
@@ -30,62 +54,66 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, index) => (
+          {timeTable.map((row, index) => (
             <tr key={index}>
-              <td>
-                <input
-                  type="text"
-                  value={row.monday}
-                  onChange={(e) => handleEditRow(index, 'monday', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  value={row.tuesday}
-                  onChange={(e) => handleEditRow(index, 'tuesday', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  value={row.wednesday}
-                  onChange={(e) => handleEditRow(index, 'wednesday', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  value={row.thursday}
-                  onChange={(e) => handleEditRow(index, 'thursday', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  value={row.friday}
-                  onChange={(e) => handleEditRow(index, 'friday', e.target.value)}
-                />
-              </td>
-
+              <td>{row.id}</td>
+              <td>{row.Monday}</td>
+              <td>{row.Tuesday}</td>
+              <td>{row.Wendsday}</td>
+              <td>{row.Thursday}</td>
+              <td>{row.Friday}</td>
             </tr>
           ))}
+          <tr>
+            <td>
+              <input
+                type="text"
+                value={hour}
+                onChange={(e) => setHour(e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={monday}
+                onChange={(e) => setMonday(e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={tuesday}
+                onChange={(e) => setTuesday(e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={wednesday}
+                onChange={(e) => setWednesday(e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={thursday}
+                onChange={(e) => setThursday(e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={friday}
+                onChange={(e) => setFriday(e.target.value)}
+              />
+            </td>
+            <td>
+              <button onClick={handleAddRow}>Add Row</button>
+            </td>
+          </tr>
         </tbody>
       </table>
-      <button onClick={handleAddRow}>Add Row</button>
     </div>
   );
 };
-export const getServerSideProps = async ({}) => {
- const TimeTable  = await prisma.timeTable.findUnique({
-      where: {
-        id: 1,
-      }
-    })
-  return {
-   
-    props: {TimeTable} 
-  }
-}
 export default Table;
-
