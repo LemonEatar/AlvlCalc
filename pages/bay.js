@@ -5,7 +5,7 @@ export async function getServerSideProps() {
   const data = fs.readFileSync('data.json');
   const jsonData = JSON.parse(data);
 
-  // Loop through the data and calculate the Abitur grade for each student
+  // gehe durch json und sammle daten
   for (let i = 0; i < jsonData.length; i++) {
     const item = jsonData[i];
     const grades = item.grades;
