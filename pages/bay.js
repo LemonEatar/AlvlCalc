@@ -1,102 +1,39 @@
-import fs from 'fs';
+const fs = require('fs');
 
-export async function getServerSideProps() {
-  // Read the JSON file
-  const data = fs.readFileSync('data.json');
-  const jsonData = JSON.parse(data);
+// Gewichtungen
+const weights = {
+  'DEU': 1,
+  'MAT': 1,
+  'FRE': 1,
+  'ABITUR': 4
+};
 
-  // gehe durch json und sammle daten
-  for (let i = 0; i < jsonData.length; i++) {
-    const item = jsonData[i];
-    const grades = item.grades;
+// lesen der json
+const data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
 
-    // gewichtung der noten
-    const gradeWeights = {
-      '1A': 1.5,
-      '2A': 1.5,
-      '3A': 1.5,
-      '4A': 1.5,
-      '1HJQ11DEU': 1,
-      '1HJQ11MAT': 1,
-      '1HJQ11ENG': 1,
-      '2HJQ11DEU': 1,
-      '2HJQ11MAT': 1,
-      '2HJQ11ENG': 1,
-      '1HJQ12DEU': 1,
-      '1HJQ12MAT': 1,
-      '1HJQ12ENG': 1,
-      '2HJQ12DEU': 1,
-      '2HJQ12MAT': 1,
-      '2HJQ12ENG': 1,
-    };
+// formel fuer gesamtpunkte
+function calculatePoints(subject) {
+  const subjectPoints = data[subject];
+  const subjectWeight = weights[subject];
 
-    //codes zum verkuerzen
-    const subjectCodes = {
-      '1A': 'abitur1',
-      '2A': 'abitur2',
-      '3A': 'abitur3',
-      '4A': 'abitur4',
-      '1HJQ11DEU': 'deutsch1HJQ11',
-      '1HJQ11MAT': 'mathe1HJQ11',
-      '1HJQ11ENG': 'englisch1HJQ11',
-      '2HJQ11DEU': 'deutsch2HJQ11',
-      '2HJQ11MAT': 'mathe2HJQ11',
-      '2HJQ11ENG': 'englisch2HJQ11',
-      '1HJQ12DEU': 'deutsch1HJQ12',
-      '1HJQ12MAT': 'mathe1HJQ12',
-      '1HJQ12ENG': 'englisch1HJQ12',
-      '2HJQ12DEU': 'deutsch2HJQ12',
-      '2HJQ12MAT': 'mathe2HJQ12',
-      '2HJQ12ENG': 'englisch2HJQ12',
-    };
+  const bestPoints = subjectPoints.slice().sort().reverse().slice(0, 4);
+  const sumPoints = bestPoints.reduce((a, b) => a + b);
 
-    // Calc abinote
-    const abiturGrades = {};
-    for (const code in subjectCodes) {
-      let sum = 0;
-      let weightSum = 0;
-      for (let j = 0; j < grades.length; j++) {
-        const grade = grades[j];
-        const gradeCode = grade[0];
-        const gradeValue = grade[1];
-        if (gradeCode.startsWith(code)) {
-          const gradeWeight = gradeWeights[gradeCode];
-          sum += gradeValue * gradeWeight;
-          weightSum += gradeWeight;
-        }
-      }
-      if (weightSum > 0) {
-        const average = sum / weightSum;
-        abiturGrades[subjectCodes[code]] = Math.round(average * 10)
-        / 10;
-      }
-    }
-
-    // ganze abinote
-    const weights = [1, 1, 1, 1, 2, 2, 3];
-    let sum = 0;
-    let weightSum = 0;
-    for (const code in subjectCodes) {
-      if (abiturGrades[subjectCodes[code]]) {
-        const gradeWeight = weights[weightSum];
-        sum += abiturGrades[subjectCodes[code]] * gradeWeight;
-        weightSum += 1;
-      }
-    }
-    const abiturAverage = sum / 10;
-
-    // abitur note zu schuelerdata
-    item.abiturGrade = abiturAverage;
-  }
-
-  // updated json zurueck in json file
-  const updatedData = JSON.stringify(jsonData, null, 2);
-  fs.writeFileSync('data.json', updatedData);
-
-  return {
-    props: {
-      jsonData,
-    },
-  };
+  const points = sumPoints / bestPoints.length;
+  return points * subjectWeight;
 }
 
+// abiformel
+const deuPoints = calculatePoints('DEU');
+const matPoints = calculatePoints('MAT');
+const frePoints = calculatePoints('FRE');
+const abiPoints = calculatePoints('ABITUR');
+
+const sumPoints = deuPoints + matPoints + frePoints + abiPoints;
+const sumWeights = weights['DEU'] + weights['MAT'] + weights['FRE'] + weights['ABITUR'];
+const abiGrade = sumPoints / sumWeights;
+
+// abinote in json
+data['Abiturnote']['ABI'] = [abiGrade];
+
+fs.writeFileSync('data.json', JSON.stringify(data));
