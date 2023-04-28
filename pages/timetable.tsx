@@ -5,6 +5,7 @@ import { TimeTable } from "@prisma/client";
 
 export async function getServerSideProps() {
   const timeTable = await prisma.timeTable.findMany();
+//  await prisma.timeTable.create({ data: newRow });
   console.debug({ timeTable });
   return {
     props: { timeTable },
@@ -23,7 +24,7 @@ const Table = ({ timeTable }: { timeTable: TimeTable[] }) => {
   const handleAddRow = async () => {
     const newRow = {
       id: rows.length + 1,
-      Hour: hour,
+      Hour: rows.length + 1,
       Monday: monday,
       Tuesday: tuesday,
       Wednesday: wednesday,
@@ -31,7 +32,6 @@ const Table = ({ timeTable }: { timeTable: TimeTable[] }) => {
       Friday: friday,
     };
     setRows([...rows, newRow]);
-    await prisma.timeTable.create({ data: newRow });
     setHour("");
     setMonday("");
     setTuesday("");
@@ -116,4 +116,5 @@ const Table = ({ timeTable }: { timeTable: TimeTable[] }) => {
     </div>
   );
 };
+
 export default Table;

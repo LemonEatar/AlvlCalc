@@ -1,4 +1,3 @@
-import prisma from '../lib/prisma'
 import React, { useState } from "react";
 
 interface TableHeader {
@@ -71,7 +70,7 @@ const Table: React.FC = () => {
     console.log(newRow.grades[0]);
   };
 
-  const handleAddCategory = (index) => {
+  const handleAddCategory = (index: number) => {
     const newCategoryTitle = subjects[index];
     if (newCategoryTitle) {
       const newCategoryKey = newCategoryTitle.toLowerCase();
@@ -79,7 +78,7 @@ const Table: React.FC = () => {
         ...prev,
         { key: newCategoryKey, title: newCategoryTitle, grades: [] },
       ]);
-      setTableData((prev) =>
+      set TableData((prev) =>
         prev.map((row) => ({ ...row, [newCategoryKey]: "" }))
       );
     }
@@ -88,62 +87,67 @@ const Table: React.FC = () => {
   return (
     <div>
       <div className="overflow-x-auto">
-      <table className="table table-compact w-full">
-        <thead>
-          <tr>
-            {tableHeaders.map(({ key, title }) => (
-              <th key={key}>{title}</th>
+        <table className="table table-compact w-full">
+          <thead>
+            <tr>
+              {tableHeaders.map(({ key, title }) => (
+                <th key={key}>{title}</th>
+              ))}
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {tableData.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {tableHeaders.map(({ key }) => (
+                  <td key={key}>
+                    {editedRowIndex === rowIndex &&
+                    editedRowValues.hasOwnProperty(key) ? (
+                      <input
+                        type={key === "id" ? "number" : "text"}
+                        value={editedRowValues[key] || row[key]}
+                        onChange={(e) => handleInputChange(e, key)}
+                      />
+                    ) : (
+                      row[key]
+                    )}
+                  </td>
+                ))}
+                <td>
+                  {editedRowIndex === rowIndex ? (
+                    <>
+                      <button onClick={handleSaveRow}>Save</button>
+                      <button onClick={handleCancelEdit}>Cancel</button>
+                    </>
+                  ) : (
+                    <button onClick={() => handleEditRow(rowIndex)}>
+                      Edit
+                    </button>
+                  )}
+                </td>
+              </tr>
             ))}
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.map((row, rowIndex) => (
-            <tr key={rowIndex}>
+            <tr>
               {tableHeaders.map(({ key }) => (
                 <td key={key}>
-                  {editedRowIndex === rowIndex &&
-                  editedRowValues.hasOwnProperty(key) ? (
-                    <input
-                      type={key === "id" ? "number" : "text"}
-                      value={editedRowValues[key] || row[key]}
-                      onChange={(e) => handleInputChange(e, key)}
-                    />
-                  ) : (
-                    row[key]
-                  )}
+                  <input
+                    type={key === "id" ? "number" : "text"}
+                    value={editedRowValues[key] || ""}
+                    onChange={(e) => handleInputChange(e, key)}
+                  />
                 </td>
               ))}
               <td>
-                {editedRowIndex === rowIndex ? (
-                  <>
-                    <button onClick={handleSaveRow}>Save</button>
-                    <button onClick={handleCancelEdit}>Cancel</button>
-                  </>
-                ) : (
-                  <button onClick={() => handleEditRow(rowIndex)}>Edit</button>
-                )}
+                <button onClick={handleAddRow}>Add</button>
               </td>
             </tr>
-          ))}
-          <tr>
-            {tableHeaders.map(({ key }) => (
-              <td key={key}>
-                <input
-                  type={key === "id" ? "number" : "text"}
-                  value={editedRowValues[key] || ""}
-                  onChange={(e) => handleInputChange(e, key)}
-                />
-              </td>
-            ))}
-            <td>
-              <button onClick={handleAddRow}>Add</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
       </div>
-      <div className="dropdown tooltip tooltip-right" data-tip="Choose your Subject here 😎">
+      <div
+        className="dropdown tooltip tooltip-right"
+        data-tip="Choose your Subject here 😎"
+      >
         <label tabIndex={0} className="btn m-1">
           Subjects
         </label>
