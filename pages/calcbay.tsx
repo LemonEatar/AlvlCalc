@@ -12,8 +12,14 @@ interface TableData {
 const subjects = ["german", "chemics", "english", "music", "test", "bio"];
 
 const initialTableHeaders: TableHeader[] = [
-  { key: "id", title: "ID" },
-  { key: "name", title: "maths" },
+  { key: "id", title: "Punkte" },
+  { key: "name", title: "Mathe" },
+  { key: "name", title: "Deutsch" },
+  { key: "name", title: "Fremdsprache" },
+  { key: "name", title: "Physik/Chemie/Bio" },
+  { key: "name", title: "Geschichte/Sozialkunde" },
+  { key: "name", title: "Kunst/Musik" },
+  { key: "name", title: "Sport" },
 ];
 
 const Table: React.FC = () => {
