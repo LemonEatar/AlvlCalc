@@ -12,14 +12,7 @@ interface TableData {
 const subjects = ["german", "chemics", "english", "music", "test", "bio"];
 
 const initialTableHeaders: TableHeader[] = [
-  { key: "id", title: "Punkte" },
-  { key: "name", title: "Mathe" },
-  { key: "name", title: "Deutsch" },
-  { key: "name", title: "Fremdsprache" },
-  { key: "name", title: "Physik/Chemie/Bio" },
-  { key: "name", title: "Geschichte/Sozialkunde" },
-  { key: "name", title: "Kunst/Musik" },
-  { key: "name", title: "Sport" },
+  { key: "id", title: "Punkte" }
 ];
 
 const Table: React.FC = () => {
@@ -84,7 +77,7 @@ const Table: React.FC = () => {
         ...prev,
         { key: newCategoryKey, title: newCategoryTitle, grades: [] },
       ]);
-      set TableData((prev) =>
+      setTableData((prev) =>
         prev.map((row) => ({ ...row, [newCategoryKey]: "" }))
       );
     }
@@ -163,7 +156,7 @@ const Table: React.FC = () => {
         >
           {subjects.map((subject, index) => {
             return (
-              <li>
+              <li key={index}>
                 <button onClick={() => handleAddCategory(index)}>
                   {subject}
                 </button>
