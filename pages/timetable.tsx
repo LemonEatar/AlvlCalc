@@ -5,7 +5,7 @@ import { TimeTable } from "@prisma/client";
 
 export async function getServerSideProps() {
   const timeTable = await prisma.timeTable.findMany();
-//  await prisma.timeTable.create({ data: newRow });
+  //  await prisma.timeTable.create({ data: newRow });
   console.debug({ timeTable });
   return {
     props: { timeTable },
@@ -14,12 +14,31 @@ export async function getServerSideProps() {
 
 const Table = ({ timeTable }: { timeTable: TimeTable[] }) => {
   const [rows, setRows] = useState<TimeTable[]>([]);
+  // TODO: days are always the same, 6 usestates are unneeded
   const [hour, setHour] = useState("");
   const [monday, setMonday] = useState("");
   const [tuesday, setTuesday] = useState("");
   const [wednesday, setWednesday] = useState("");
   const [thursday, setThursday] = useState("");
   const [friday, setFriday] = useState("");
+  const [name, setName] = useState("");
+
+  const addItem = () => {
+    fetch("/api/hello", { method: "GET" })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw Error("Unable to parse json.");
+      })
+      .then((data) => {
+        console.debug({ data });
+        setName(data.name);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   const handleAddRow = async () => {
     const newRow = {
@@ -42,6 +61,7 @@ const Table = ({ timeTable }: { timeTable: TimeTable[] }) => {
 
   return (
     <div>
+      name: {name}
       <table>
         <thead>
           <tr>
@@ -108,7 +128,7 @@ const Table = ({ timeTable }: { timeTable: TimeTable[] }) => {
               />
             </td>
             <td>
-              <button onClick={handleAddRow}>Add Row</button>
+              <button onClick={addItem}>Add Row</button>
             </td>
           </tr>
         </tbody>

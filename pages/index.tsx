@@ -15,7 +15,7 @@ function HomePage() {
       <meta charSet="UTF-8" />
       <title>abirechner</title>
       <div className="navbar bg-base-300">
-         <div className="flex-1">
+        <div className="flex-1">
           <a className="btn btn-ghost normal-case text-xl">ALvL</a>
         </div>
         <div className="flex-none">
@@ -35,17 +35,17 @@ function HomePage() {
               </a>
               <ul className="p-2 bg-base-100 absolute top-14 left-0">
                 <li>
-                <button onClick={() => window.location.href = '/calcbay'}>
-              <a>Bayern Calc</a>
-            </button>
+                  <button onClick={() => (window.location.href = "/calcbay")}>
+                    <a>Bayern Calc</a>
+                  </button>
 
-            <button onClick={() => window.location.href = '/calcnrw'}>
-              <a>NRW Calc</a>
-            </button>
+                  <button onClick={() => (window.location.href = "/calcnrw")}>
+                    <a>NRW Calc</a>
+                  </button>
 
-            <button onClick={() => window.location.href = '/calchess'}>
-              <a>Hessen Calc</a>
-            </button>
+                  <button onClick={() => (window.location.href = "/calchess")}>
+                    <a>Hessen Calc</a>
+                  </button>
                 </li>
               </ul>
             </li>
@@ -63,18 +63,18 @@ function HomePage() {
                 </svg>
               </a>
               <ul className="p-2 bg-base-100 absolute top-14 left-0">
-              <li>
-                <button onClick={() => window.location.href = '/ttabl'}>
-              <a>Timetable</a>
-            </button>
+                <li>
+                  <button onClick={() => (window.location.href = "/timetable")}>
+                    <a>Timetable</a>
+                  </button>
 
-            <button onClick={() => window.location.href = '/nchar'}>
-              <a>Notenchart</a>
-            </button>
+                  <button onClick={() => (window.location.href = "/nchar")}>
+                    <a>Notenchart</a>
+                  </button>
 
-            <button onClick={() => window.location.href = '/npred'}>
-              <a>Notenpredictor</a>
-            </button>
+                  <button onClick={() => (window.location.href = "/npred")}>
+                    <a>Notenpredictor</a>
+                  </button>
                 </li>
               </ul>
             </li>
@@ -92,29 +92,31 @@ function HomePage() {
                 </svg>
               </a>
               <ul className="p-2 bg-base-100 absolute top-14 left-0">
-              <li>
-                <button onClick={() => window.location.href = '/about'}>
-              <a>About</a>
-            </button>
+                <li>
+                  <button onClick={() => (window.location.href = "/about")}>
+                    <a>About</a>
+                  </button>
 
-            <button onClick={() => window.location.href = '/contact'}>
-              <a>Contact</a>
-            </button>
+                  <button onClick={() => (window.location.href = "/contact")}>
+                    <a>Contact</a>
+                  </button>
 
-            <button onClick={() => window.location.href = '/cffe'}>
-              <a>Buy us a Coffee</a>
-            </button>
+                  <button onClick={() => (window.location.href = "/cffe")}>
+                    <a>Buy us a Coffee</a>
+                  </button>
                 </li>
               </ul>
             </li>
-            <li><a>Login/Registrieren</a></li>
+            <li>
+              <a>Login/Registrieren</a>
+            </li>
           </ul>
         </div>
       </div>
       <Background />
       <style jsx global>{`
         body {
-          background-image: url('bground.jpeg');
+          background-image: url("bground.jpeg");
           background-repeat: no-repeat;
           background-size: cover;
           background-position: center;
